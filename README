@@ -1,0 +1,39 @@
+Based loosely on fserb's answer to this question:
+http://stackoverflow.com/questions/23907/how-can-i-graph-the-lines-of-code-history-for-git-repo
+
+PUBLIC DOMAIN
+
+Put it in your ~/bin/ directory and make sure it's set to executable (chmod
+gu+x ~/bin/gitloc)
+
+Basically it gives you a per-day breakdown of how much "work" you did on the
+current git repository.
+
+
+  $  cd myrepository
+  $  gitloc
+    Tue, Nov 02 2010 |     35 lines | (2719)
+    Wed, Nov 03 2010 |    573 lines | (3292)
+    Thu, Nov 04 2010 |    731 lines | (4023)
+    Fri, Nov 05 2010 |    101 lines | (4124)
+
+You can also have it only look in specific directories
+
+  $  cd myrepository
+  $  gitloc app lib script public
+    Tue, Nov 02 2010 |     25 lines | (1719)
+    Wed, Nov 03 2010 |    473 lines | (2192)
+
+...
+
+
+The number in parentheses is the running total.  I tried to make it somewhat
+intelligent- it doesn't just look for lines added minus lines deleted- it tries
+to ignore any "whitespace" changes- like indenting or whatever, it tries to
+ignore files that were renamed or copied, and it tries to not give too high of
+a number if you simply move chunks of code to other places in the file.  But it
+does give you credit for removing code.  So if you spend a couple of days
+cleaning up your project and finding ways to do the same amount of work in 10
+lines of code that was taking 100 lines of code- you get "90" added to the
+count, even though they were technically lines removed instead of added.
+
